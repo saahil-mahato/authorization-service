@@ -13,16 +13,13 @@ This project is a micro service for RBAC. It uses the permify api.
 
 3. Run the Permify service with the following command
 
-`docker run -p 3476:3476 -p 3478:3478  ghcr.io/permify/permify
-`
+`docker run -p 3476:3476 -p 3478:3478  ghcr.io/permify/permify`
 
 **Note**: You might require admin permissions so use `sudo` command if permission is denied.
 
-4. Navigate to the project directory and install the dependencies using the following commands:
-`
-go mod download
-go mod tidy
-`
+4. Navigate to the project directory and install the dependencies using the following commands:\n
+`go mod download`\n
+`go mod tidy`
 
 5. Run the application with the command `go run main.go`.
 
