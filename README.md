@@ -17,8 +17,8 @@ This project is a micro service for RBAC. It uses the permify api.
 
 **Note**: You might require admin permissions so use `sudo` command if permission is denied.
 
-4. Navigate to the project directory and install the dependencies using the following commands:\n
-`go mod download`\n
+4. Navigate to the project directory and install the dependencies using the following commands:
+`go mod download`
 `go mod tidy`
 
 5. Run the application with the command `go run main.go`.
