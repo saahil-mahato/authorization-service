@@ -1,7 +1,7 @@
 package models
 
 type AuthorizationConfig struct {
-	ID        int    `json:"id"`
+	ID        uint   `json:"id"`
 	URL       string `json:"url"`
 	Resource  string `json:"resource"`
 	Role      string `json:"role"`
