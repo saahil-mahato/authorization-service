@@ -22,7 +22,7 @@ func NewHandler(authService service.AuthorizationService) *Handler {
 }
 
 func (h *Handler) CreateAuth(c *gin.Context) {
-	var config models.AuthorizationConfig
+	var config models.AuthorizationData
 	if err := c.ShouldBindJSON(&config); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -63,18 +63,18 @@ func (h *Handler) ListAuth(c *gin.Context) {
 }
 
 func (h *Handler) UpdateAuth(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
-	if err != nil {
+	id := c.Param("id")
+	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": INVALID_ID})
 		return
 	}
 
-	var config models.AuthorizationConfig
+	var config models.AuthorizationData
 	if err := c.ShouldBindJSON(&config); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	config.ID = uint(id)
+	config.TenantID = id
 
 	if err := h.authService.UpdateConfig(&config); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update authorization config"})
