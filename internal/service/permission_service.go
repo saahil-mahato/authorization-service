@@ -8,7 +8,7 @@ import (
 )
 
 type PermissionService interface {
-	CheckAccessControl(tenantID string, metaData *v1.PermissionCheckRequestMetadata, entity *v1.Entity, permission string, subject *v1.Subject) (string, error)
+	CheckAccessControl(tenantID string, permission string, metaData *v1.PermissionCheckRequestMetadata, entity *v1.Entity, subject *v1.Subject) (string, error)
 }
 
 type permissionService struct {
@@ -19,7 +19,7 @@ func NewPermissionService(client *permify_grpc.Client) PermissionService {
 	return &permissionService{client: client}
 }
 
-func (s *permissionService) CheckAccessControl(tenantID string, metaData *v1.PermissionCheckRequestMetadata, entity *v1.Entity, permission string, subject *v1.Subject) (string, error) {
+func (s *permissionService) CheckAccessControl(tenantID string, permission string, metaData *v1.PermissionCheckRequestMetadata, entity *v1.Entity, subject *v1.Subject) (string, error) {
 	cr, err := s.client.Permission.Check(context.Background(), &v1.PermissionCheckRequest{
 		TenantId:   tenantID,
 		Metadata:   metaData,

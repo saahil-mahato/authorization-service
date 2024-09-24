@@ -43,9 +43,9 @@ func (h *PermissionHandler) CheckAccessControl(c *gin.Context) {
 		Id:   payload.SubjectID,
 	}
 
-	permission, err := h.permissionService.CheckAccessControl(tenantID, metaData, entity, payload.Permission, subject)
+	permission, err := h.permissionService.CheckAccessControl(tenantID, payload.Permission, metaData, entity, subject)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to check permission for tenant %s", tenantID)})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to check permission for tenant %s. Error %s", tenantID, err.Error())})
 		return
 	}
 

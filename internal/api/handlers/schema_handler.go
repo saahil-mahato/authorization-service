@@ -32,7 +32,7 @@ func (h *SchemaHandler) WriteSchema(c *gin.Context) {
 	savedSchema, err := h.schemaService.WriteSchema(payload.TenantID, payload.Schema)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create authorization schema"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to create authorization schema. Error %s", err.Error())})
 		return
 	}
 
@@ -53,7 +53,7 @@ func (h *SchemaHandler) ListSchema(c *gin.Context) {
 
 	schemaList, err := h.schemaService.ListSchema(tenantID, continuousToken, uint32(pageSize))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to fetch schema list for tenant %s", tenantID)})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to fetch schema list for tenant %s. Error %s", tenantID, err.Error())})
 		return
 	}
 
@@ -66,7 +66,7 @@ func (h *SchemaHandler) ReadSchema(c *gin.Context) {
 
 	schema, err := h.schemaService.ReadSchema(tenantID, schemaVersion)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to fetch schema for tenant %s and schemaVersion %s", tenantID, schemaVersion)})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to fetch schema for tenant %s and schemaVersion %s. Error %s", tenantID, schemaVersion, err.Error())})
 		return
 	}
 
