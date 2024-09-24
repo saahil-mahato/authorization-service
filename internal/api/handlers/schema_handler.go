@@ -14,15 +14,15 @@ const (
 	INVALID_ID = "Invalid ID"
 )
 
-type Handler struct {
+type SchemaHandler struct {
 	schemaService service.SchemaService
 }
 
-func NewHandler(schemaService service.SchemaService) *Handler {
-	return &Handler{schemaService: schemaService}
+func NewSchemaHandler(schemaService service.SchemaService) *SchemaHandler {
+	return &SchemaHandler{schemaService: schemaService}
 }
 
-func (h *Handler) WriteSchema(c *gin.Context) {
+func (h *SchemaHandler) WriteSchema(c *gin.Context) {
 	var payload models.WriteSchemaPayload
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -39,7 +39,7 @@ func (h *Handler) WriteSchema(c *gin.Context) {
 	c.JSON(http.StatusCreated, savedSchema)
 }
 
-func (h *Handler) ListSchema(c *gin.Context) {
+func (h *SchemaHandler) ListSchema(c *gin.Context) {
 	tenantID := c.Param("id")
 	continuousToken := c.Query("continuous_token")
 	pageSizeStr := c.Query("page_size")
@@ -60,7 +60,7 @@ func (h *Handler) ListSchema(c *gin.Context) {
 	c.JSON(http.StatusOK, schemaList)
 }
 
-func (h *Handler) ReadSchema(c *gin.Context) {
+func (h *SchemaHandler) ReadSchema(c *gin.Context) {
 	tenantID := c.Param("id")
 	schemaVersion := c.Param("version")
 
