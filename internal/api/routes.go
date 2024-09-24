@@ -6,19 +6,17 @@ import (
 	"github.com/saahil-mahato/authorization-service/internal/service"
 )
 
+// API routes for Schema
 const (
-	AUTH    = "/auth"
-	AUTH_ID = "/auth/:id"
-	CHECK   = "/check"
+	SCHEMA                          = "/schema"
+	SCHEMA_TENANT_ID                = "/schema/:id"
+	SCHEMA_TENANT_ID_SCHEMA_VERSION = "/schema/:id/:version"
 )
 
-func SetupRoutes(r *gin.Engine, authService service.AuthorizationService) {
-	h := handlers.NewHandler(authService)
+func SetupRoutes(r *gin.Engine, schemaService service.SchemaService) {
+	schemaHandler := handlers.NewHandler(schemaService)
 
-	r.POST(AUTH, h.CreateAuth)
-	r.GET(AUTH_ID, h.GetAuth)
-	r.GET(AUTH, h.ListAuth)
-	r.PUT(AUTH_ID, h.UpdateAuth)
-	r.DELETE(AUTH_ID, h.DeleteAuth)
-	r.POST(CHECK, h.CheckAuthorization)
+	r.POST(SCHEMA, schemaHandler.WriteSchema)
+	r.GET(SCHEMA_TENANT_ID, schemaHandler.ListSchema)
+	r.GET(SCHEMA_TENANT_ID_SCHEMA_VERSION, schemaHandler.ReadSchema)
 }
